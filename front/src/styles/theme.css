@@ -1,0 +1,18 @@
+/* DASHBOARD THEME TOKENS (light) */
+@layer base {
+  .theme-app-light {
+    --app-bg: #F6F9FC;
+    --app-sidebar: #EEF2F7;
+    --app-topbar: #FFFFFF;
+    --app-card: #FFFFFF;
+    --app-border: #E5E7EB;
+    
+    --app-blue: #2563EB;
+    --app-teal: #14B8A6;
+    --app-red: #EF4444;
+    --app-purple: #8B5CF6;
+    
+    --app-text: #1F2937;
+    --app-muted: #6B7280;
+  }
+}

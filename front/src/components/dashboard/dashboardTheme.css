@@ -1,0 +1,22 @@
+:root {
+  --theme-medlink-bg: #EEF2F6;
+  --theme-medlink-sidebar: #1E3A5F;
+  --theme-medlink-sidebar-text: #E5E7EB;
+  --theme-medlink-topbar: #FFFFFF;
+  --theme-medlink-card: #F8FAFC;
+  --theme-medlink-border: #D1D5DB;
+  
+  --theme-medlink-primary-blue: #3B82F6;
+  --theme-medlink-medical-teal: #0D9488;
+  --theme-medlink-emergency-red: #DC2626;
+  --theme-medlink-ai-purple: #7C3AED;
+  
+  --theme-medlink-text-primary: #1F2937;
+  --theme-medlink-text-secondary: #6B7280;
+}
+
+.theme-medlink-dashboard {
+  background-color: var(--theme-medlink-bg);
+  color: var(--theme-medlink-text-primary);
+  min-height: 100vh;
+}
