@@ -43,7 +43,7 @@ export default function Section({
                             {subtitle}
                         </p>
                     )}
-                    <div className="mt-4 h-1 w-16 rounded-full bg-[#2563EB] mx-auto opacity-80" />
+                    <div className="mt-4 h-1 w-16 rounded-full bg-[#2563eb] mx-auto opacity-80" />
                 </div>
             )}
             {children}

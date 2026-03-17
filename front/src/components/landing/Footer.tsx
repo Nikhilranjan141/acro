@@ -12,13 +12,13 @@ const footerLinks = [
 export default function Footer() {
     return (
         <footer
-            className="bg-[#1F2937] text-gray-300"
+            className="bg-[#FFFFFF] text-[#6B7280] border-t border-[#E5E7EB]"
             role="contentinfo"
             aria-label="Site footer"
         >
             {/* Top section */}
             <Container>
-                <div className="py-12 grid sm:grid-cols-3 gap-8 border-b border-gray-700/60">
+                <div className="py-12 grid sm:grid-cols-3 gap-8 border-b border-[#E5E7EB]">
                     {/* Brand column */}
                     <div className="sm:col-span-1">
                         <a
@@ -29,11 +29,11 @@ export default function Footer() {
                             <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#2563EB]">
                                 <Activity className="w-4 h-4 text-white" />
                             </span>
-                            <span className="text-xl font-bold text-white">
-                                Med<span className="text-[#60A5FA]">Link</span>
+                            <span className="text-xl font-bold text-[#1F2937]">
+                                Med<span className="text-[#2563EB]">Link</span>
                             </span>
                         </a>
-                        <p className="text-sm text-gray-400 leading-relaxed max-w-xs">
+                        <p className="text-sm text-[#6B7280] leading-relaxed max-w-xs">
                             The smart emergency healthcare resource network, connecting hospitals
                             and saving lives in real time.
                         </p>
@@ -42,7 +42,7 @@ export default function Footer() {
                     {/* Links columns */}
                     <div className="sm:col-span-2 grid grid-cols-2 gap-8">
                         <div>
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                            <h3 className="text-xs font-bold text-[#1F2937] uppercase tracking-widest mb-4">
                                 Platform
                             </h3>
                             <ul className="space-y-2.5" role="list">
@@ -50,7 +50,7 @@ export default function Footer() {
                                     <li key={item}>
                                         <a
                                             href="#features"
-                                            className="text-sm text-gray-400 hover:text-white transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
+                                            className="text-sm text-[#6B7280] hover:text-[#2563EB] transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
                                         >
                                             {item}
                                         </a>
@@ -59,7 +59,7 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                            <h3 className="text-xs font-bold text-[#1F2937] uppercase tracking-widest mb-4">
                                 Company
                             </h3>
                             <ul className="space-y-2.5" role="list">
@@ -72,7 +72,7 @@ export default function Footer() {
                                     <li key={item.label}>
                                         <a
                                             href={item.href}
-                                            className="text-sm text-gray-400 hover:text-white transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
+                                            className="text-sm text-[#6B7280] hover:text-[#2563EB] transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
                                         >
                                             {item.label}
                                         </a>
@@ -84,8 +84,8 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-sm text-gray-500 text-center sm:text-left">
+                <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#E5E7EB]">
+                    <p className="text-sm text-[#6B7280] text-center sm:text-left">
                         © 2026 MedLink. All rights reserved.
                     </p>
 
@@ -95,7 +95,7 @@ export default function Footer() {
                                 <li key={link.label}>
                                     <a
                                         href={link.href}
-                                        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-200 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
+                                        className="flex items-center gap-1.5 text-sm text-[#6B7280] hover:text-[#2563EB] transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded"
                                         target={link.href.startsWith('http') ? '_blank' : undefined}
                                         rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                                     >
@@ -107,7 +107,7 @@ export default function Footer() {
                         </ul>
                     </nav>
 
-                    <p className="text-xs text-gray-600 flex items-center gap-1">
+                    <p className="text-xs text-[#6B7280] flex items-center gap-1">
                         Made with <Heart className="w-3 h-3 text-[#EF4444]" aria-hidden="true" /> for better healthcare
                     </p>
                 </div>

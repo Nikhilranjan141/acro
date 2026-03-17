@@ -35,10 +35,10 @@ export const ResourceStatusPanel: React.FC<ResourceStatusPanelProps> = ({ data }
   ];
 
   return (
-    <div className="flex flex-col h-full rounded-xl bg-[var(--theme-medlink-card)] border border-[var(--theme-medlink-border)] p-5 shadow-sm">
-      <h2 className="text-lg font-bold text-[var(--theme-medlink-text-primary)] mb-4">Resource Status</h2>
+    <div className="flex flex-col h-full rounded-xl bg-[var(--theme-medlink-card)] border border-[var(--theme-medlink-border)] p-4 shadow-sm">
+      <h2 className="text-lg font-bold text-[var(--theme-medlink-text-primary)] mb-3">Resource Status</h2>
       
-      <div className="flex flex-col gap-5 flex-1 justify-center">
+      <div className="flex flex-col gap-3.5">
         {statsList.map((stat, idx) => {
           let pct = 0;
           let labelText = '';
@@ -80,7 +80,7 @@ export const ResourceStatusPanel: React.FC<ResourceStatusPanelProps> = ({ data }
         })}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-[var(--theme-medlink-border)] flex items-center justify-between text-xs text-[var(--theme-medlink-text-secondary)]">
+      <div className="mt-4 pt-3 border-t border-[var(--theme-medlink-border)] flex items-center justify-between text-xs text-[var(--theme-medlink-text-secondary)]">
          <span>Real-time sync active</span>
          <span className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">

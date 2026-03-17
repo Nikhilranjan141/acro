@@ -12,56 +12,57 @@ interface Feature {
 
 const features: Feature[] = [
     {
-        label: 'ICU Beds',
-        description: 'Live count of available ICU beds across all connected hospitals with instant alerts.',
+        label: 'Real-Time Resource Dashboard',
+        description: 'Monitor live ICU beds, ventilators, doctors, ambulances, and blood bank inventory across your entire network.',
         icon: <BedDouble className="w-5 h-5" />,
         accent: '#2563EB',
-        bg: '#EFF6FF',
+        bg: 'rgba(37,99,235,0.12)',
     },
     {
-        label: 'Ventilators',
-        description: 'Real-time ventilator availability tracking with predictive demand forecasting.',
+        label: 'Smart Hospital Recommendation',
+        description: 'AI identifies the best hospital based on availability, specializations, equipment readiness, and distance.',
+        icon: <Brain className="w-5 h-5" />,
+        accent: '#8B5CF6',
+        bg: 'rgba(139,92,246,0.12)',
+    },
+    {
+        label: 'Ambulance Coordination',
+        description: 'GPS tracking with optimal routing, emergency priority dispatch, and pre-arrival hospital notifications.',
+        icon: <Ambulance className="w-5 h-5" />,
+        accent: '#EF4444',
+        bg: 'rgba(239,68,68,0.12)',
+    },
+    {
+        label: 'Patient Transfer System',
+        description: 'Request system with destination confirmation, live resource verification, and transfer documentation tracking.',
         icon: <Activity className="w-5 h-5" />,
         accent: '#14B8A6',
-        bg: '#F0FDFA',
-    },
-    {
-        label: 'Emergency Doctors',
-        description: 'Track on-call emergency physicians and specialist availability across facilities.',
-        icon: <ShieldAlert className="w-5 h-5" />,
-        accent: '#EF4444',
-        bg: '#FFF5F5',
-    },
-    {
-        label: 'Ambulance Tracking',
-        description: 'GPS-enabled ambulance fleet management with optimal route assignment.',
-        icon: <Ambulance className="w-5 h-5" />,
-        accent: '#2563EB',
-        bg: '#EFF6FF',
-    },
-    {
-        label: 'Blood Bank Status',
-        description: 'Monitor blood type inventory in real-time across regional blood banks.',
-        icon: <Droplets className="w-5 h-5" />,
-        accent: '#14B8A6',
-        bg: '#F0FDFA',
+        bg: 'rgba(20,184,166,0.12)',
     },
     {
         label: 'AI Demand Prediction',
-        description: 'ML-powered forecasting of resource demand helps hospitals prepare proactively.',
-        icon: <Brain className="w-5 h-5" />,
+        description: 'Forecast ICU surges, emergency admissions, equipment shortages, and resource trends before they occur.',
+        icon: <ShieldAlert className="w-5 h-5" />,
         accent: '#8B5CF6',
-        bg: '#F5F3FF',
+        bg: 'rgba(139,92,246,0.12)',
+    },
+    {
+        label: 'Emergency Coordination Mode',
+        description: 'Activate during disasters or mass casualty incidents for unified emergency response across all hospitals.',
+        icon: <Droplets className="w-5 h-5" />,
+        accent: '#EF4444',
+        bg: 'rgba(239,68,68,0.12)',
     },
 ];
 
 export default function Features() {
     return (
-        <Container>
+        <div className="bg-[#F9FAFB] border-y border-[#E5E7EB]">
+            <Container>
             <Section
                 id="features"
-                title="Platform Features"
-                subtitle="Everything you need to coordinate emergency healthcare resources in real time."
+                title="Core Platform Features"
+                subtitle="Hospital-centered features designed for emergency coordinators and administrators."
             >
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {features.map((feature) => (
@@ -69,14 +70,15 @@ export default function Features() {
                     ))}
                 </div>
             </Section>
-        </Container>
+            </Container>
+        </div>
     );
 }
 
 function FeatureCard({ feature }: { feature: Feature }) {
     return (
         <div
-            className="group relative flex flex-col gap-3 p-5 rounded-2xl bg-white border border-[rgba(31,41,55,0.08)] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default focus-within:ring-2 focus-within:ring-[#2563EB]"
+            className="group relative flex flex-col gap-3 p-5 rounded-2xl bg-[#FFFFFF] border border-[#E5E7EB] shadow-sm hover:shadow-md hover:bg-[#F9FAFB] transition-all duration-300 cursor-default focus-within:ring-2 focus-within:ring-[#2563EB]"
             tabIndex={0}
             aria-label={feature.label}
         >
@@ -90,7 +92,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-[#6B7280] leading-relaxed">{feature.description}</p>
+            <p className="text-sm text-[#6B7280] leading-relaxed font-medium">{feature.description}</p>
 
             {/* Bottom accent line */}
             <div

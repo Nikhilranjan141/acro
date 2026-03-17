@@ -1,0 +1,22 @@
+{
+  "name": "acro-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n API,FRONT -c magenta,cyan \"npm --prefix api run dev\" \"npm --prefix front run dev\"",
+    "dev:api": "npm --prefix api run dev",
+    "dev:front": "npm --prefix front run dev",
+    "build": "npm --prefix api run build && npm --prefix front run build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.577.0",
+    "react-hook-form": "^7.71.2",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^3.8.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

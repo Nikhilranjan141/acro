@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Building2, Navigation, Clock, Activity, Loader2 } from 'lucide-react';
+import { runtimeConfig } from '../../lib/runtimeConfig';
 
 interface RecHospital {
   id: string;
@@ -14,21 +15,87 @@ export const SmartHospitalCard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [hospital, setHospital] = useState<RecHospital | null>(null);
 
+  const getCityFallbackHospital = (city: string): RecHospital => {
+    const fallbackByCity: Record<string, RecHospital> = {
+      Indore: {
+        id: 'IND-REC-1',
+        name: 'Indore Central Hospital',
+        distance_km: '2.8',
+        icu_available: 12,
+        eta_mins: 10,
+        workload_badge: 'Balanced load',
+      },
+      Bhopal: {
+        id: 'BHO-REC-1',
+        name: 'Bhopal Central Trauma Care',
+        distance_km: '3.4',
+        icu_available: 9,
+        eta_mins: 12,
+        workload_badge: 'Moderate load',
+      },
+      Ujjain: {
+        id: 'UJJ-REC-1',
+        name: 'Ujjain District Hospital',
+        distance_km: '2.1',
+        icu_available: 7,
+        eta_mins: 9,
+        workload_badge: 'Priority support',
+      },
+    };
+
+    return fallbackByCity[city] || fallbackByCity.Indore;
+  };
+
   useEffect(() => {
     const fetchRec = async () => {
+      const city = localStorage.getItem('medlink-selected-city') || runtimeConfig.defaultCity || 'Indore';
+      const fallback = getCityFallbackHospital(city);
+      setLoading(true);
+      setHospital(fallback);
+
       try {
-        const res = await fetch('http://localhost:3001/api/recommendation');
+        const res = await fetch(`${runtimeConfig.apiBaseUrl}/api/recommendation?city=${encodeURIComponent(city)}`, {
+          headers: runtimeConfig.routingApiToken
+            ? {
+                'x-routing-token': runtimeConfig.routingApiToken,
+              }
+            : undefined,
+        });
+
+        if (!res.ok) {
+          throw new Error(`Recommendation API failed (${res.status})`);
+        }
+
         const data = await res.json();
-        if (!data.error) setHospital(data);
+        const isValidPayload =
+          data &&
+          !data.error &&
+          typeof data.name === 'string' &&
+          typeof data.distance_km === 'string' &&
+          typeof data.eta_mins === 'number';
+
+        if (isValidPayload) {
+          setHospital(data);
+        }
       } catch (e) {
         console.error(e);
+        setHospital(fallback);
       } finally {
         setLoading(false);
       }
     };
     fetchRec();
     const interval = setInterval(fetchRec, 15000);
-    return () => clearInterval(interval);
+
+    const onCityChange = () => {
+      fetchRec();
+    };
+    window.addEventListener('medlink:city-changed', onCityChange as EventListener);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('medlink:city-changed', onCityChange as EventListener);
+    };
   }, []);
 
   return (

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { MapPin, LayoutDashboard, ShieldAlert, Activity } from 'lucide-react';
+import { MapPin, LayoutDashboard, ShieldAlert } from 'lucide-react';
 import Container from './Container';
 import Section from './Section';
 import { cn } from '../../lib/cn';
+import MedLinkLogo from '../common/MedLinkLogo';
 
 const views = [
     {
@@ -26,7 +27,7 @@ const views = [
 ];
 
 const resourceRows = [
-    { label: 'ICU Beds', value: '142 / 180', pct: 79, color: '#2563EB' },
+    { label: 'ICU Beds', value: '142 / 180', pct: 79, color: '#2563eb' },
     { label: 'Ventilators', value: '38 / 52', pct: 73, color: '#14B8A6' },
     { label: 'Emergency Doctors', value: '24 active', pct: 60, color: '#EF4444' },
     { label: 'Ambulances', value: '15 / 20', pct: 75, color: '#8B5CF6' },
@@ -59,15 +60,15 @@ export default function DashboardPreview() {
                                 className={cn(
                                     'group flex items-start gap-3 p-4 rounded-xl border text-left transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#2563EB]',
                                     active === view.id
-                                        ? 'bg-[#2563EB] border-[#2563EB] text-white shadow-md shadow-blue-200'
-                                        : 'bg-white border-[rgba(31,41,55,0.08)] text-[#1F2937] hover:border-[#2563EB]/30 hover:bg-blue-50/30'
+                                        ? 'bg-[#2563EB] border-[#2563EB] text-white shadow-md'
+                                        : 'bg-white border-[#E5E7EB] text-[#1F2937] hover:border-[#2563EB] hover:bg-[#F9FAFB]'
                                 )}
                                 aria-pressed={active === view.id}
                             >
                                 <div
                                     className={cn(
                                         'flex items-center justify-center w-8 h-8 rounded-lg shrink-0 mt-0.5 transition-colors',
-                                        active === view.id ? 'bg-white/20' : 'bg-[#2563EB]/10 text-[#2563EB]'
+                                        active === view.id ? 'bg-white/20' : 'bg-[rgba(37,99,235,0.12)] text-[#2563EB]'
                                     )}
                                 >
                                     {view.icon}
@@ -95,16 +96,16 @@ export default function DashboardPreview() {
                     </div>
 
                     {/* Right: preview frame */}
-                    <div className="md:col-span-3 bg-white rounded-2xl border border-[rgba(31,41,55,0.08)] shadow-sm overflow-hidden">
+                    <div className="md:col-span-3 bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
                         {/* Frame header */}
-                        <div className="flex items-center gap-2 px-4 py-3 border-b border-[rgba(31,41,55,0.06)] bg-gray-50">
+                        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#E5E7EB] bg-[#F9FAFB]">
                             <div className="flex gap-1.5">
                                 <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]" />
                                 <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
                                 <span className="w-2.5 h-2.5 rounded-full bg-[#14B8A6]" />
                             </div>
                             <span className="ml-2 text-xs font-medium text-[#6B7280] flex items-center gap-1.5">
-                                <Activity className="w-3 h-3 text-[#2563EB]" />
+                                <MedLinkLogo iconOnly iconClassName="w-5 h-5 rounded-md" />
                                 MedLink —{' '}
                                 {active === 'map'
                                     ? 'Hospital Map View'
@@ -120,7 +121,7 @@ export default function DashboardPreview() {
 
                         <div className="p-4 flex flex-col gap-4">
                             {/* Map block skeleton */}
-                            <div className="relative h-32 rounded-xl bg-gradient-to-br from-blue-50 to-teal-50 border border-[rgba(31,41,55,0.06)] overflow-hidden">
+                            <div className="relative h-32 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] overflow-hidden">
                                 <svg className="absolute inset-0 w-full h-full opacity-15">
                                     <defs>
                                         <pattern id="dashgrid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -143,7 +144,7 @@ export default function DashboardPreview() {
                                         <MapPin className="w-4 h-4 drop-shadow" style={{ color: p.c }} />
                                     </div>
                                 ))}
-                                <div className="absolute bottom-2 left-2 text-[10px] text-[#6B7280] bg-white/80 px-2 py-0.5 rounded-md border border-[rgba(31,41,55,0.08)]">
+                                <div className="absolute bottom-2 left-2 text-[10px] text-[#6B7280] bg-white/80 px-2 py-0.5 rounded-md border border-[#E5E7EB]">
                                     27 hospitals connected
                                 </div>
                             </div>
@@ -159,7 +160,7 @@ export default function DashboardPreview() {
                                 {resourceRows.map((row) => (
                                     <div key={row.label} className="flex items-center gap-3">
                                         <div className="w-28 shrink-0">
-                                            <span className="text-xs text-[#374151] font-medium">{row.label}</span>
+                                            <span className="text-xs text-[#1F2937] font-medium">{row.label}</span>
                                         </div>
                                         <div className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden">
                                             <div
@@ -189,7 +190,7 @@ export default function DashboardPreview() {
                                                 className="w-2 h-2 rounded-full shrink-0"
                                                 style={{ background: item.dot }}
                                             />
-                                            <span className="text-xs text-[#374151] flex-1 leading-snug">{item.msg}</span>
+                                            <span className="text-xs text-[#1F2937] flex-1 leading-snug">{item.msg}</span>
                                             <span className="text-[10px] text-[#9CA3AF] shrink-0">{item.time}</span>
                                         </div>
                                     ))}

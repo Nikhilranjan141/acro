@@ -11,6 +11,12 @@ export const setSimulatorSocket = (io: ServerIO) => {
 export const startSimulator = () => {
   if (simulatorInterval) return;
 
+  const db = supabase;
+  if (!db) {
+    console.warn('Simulator disabled: Supabase is not configured.');
+    return;
+  }
+
   console.log('Starting MedLink Simulator loop...');
 
   simulatorInterval = setInterval(async () => {
@@ -18,11 +24,11 @@ export const startSimulator = () => {
       if (!ioInstance) return;
 
       // 1. Randomly update oxygen for a hospital
-      const { data: hospitals } = await supabase.from('hospitals').select('id');
+      const { data: hospitals } = await db.from('hospitals').select('id');
       if (hospitals && hospitals.length > 0) {
         const randomHosp = hospitals[Math.floor(Math.random() * hospitals.length)];
         // Get current stats
-        const { data: currentStat } = await supabase
+        const { data: currentStat } = await db
           .from('resource_status')
           .select('oxygen_pct, icu, ambulances')
           .eq('hospital_id', randomHosp.id)
@@ -34,7 +40,7 @@ export const startSimulator = () => {
           if (newOx > 100) newOx = 100;
           if (newOx < 0) newOx = 0;
 
-          await supabase
+          await db
             .from('resource_status')
             .update({ oxygen_pct: newOx })
             .eq('hospital_id', randomHosp.id);
@@ -48,18 +54,18 @@ export const startSimulator = () => {
       }
 
       // 2. Randomly jitter ambulance locations
-      const { data: ambulances } = await supabase.from('ambulances').select('id, lat, lng');
+      const { data: ambulances } = await db.from('ambulances').select('id, lat, lng');
       if (ambulances) {
         for (const amb of ambulances) {
           // small position jitter (approx 10-50 meters)
           const newLat = Number(amb.lat) + (Math.random() * 0.001 - 0.0005);
           const newLng = Number(amb.lng) + (Math.random() * 0.001 - 0.0005);
           
-          await supabase.from('ambulances').update({ lat: newLat, lng: newLng }).eq('id', amb.id);
+          await db.from('ambulances').update({ lat: newLat, lng: newLng }).eq('id', amb.id);
         }
         
         // Broadcast all ambulances
-        const { data: allAmbs } = await supabase.from('ambulances').select('*');
+        const { data: allAmbs } = await db.from('ambulances').select('*');
         ioInstance.emit('ambulances:update', allAmbs);
       }
 
@@ -68,7 +74,7 @@ export const startSimulator = () => {
         const severities = ['info', 'warning', 'teal'];
         const randomSev = severities[Math.floor(Math.random() * severities.length)];
         
-        const { data: logEntry } = await supabase.from('audit_log').insert({
+        const { data: logEntry } = await db.from('audit_log').insert({
           type: 'SYSTEM',
           message: `Simulated network update ping received at ${new Date().toISOString()}`,
           severity: randomSev

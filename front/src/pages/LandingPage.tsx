@@ -30,7 +30,7 @@ export default function LandingPage() {
         <>
             <Navbar onOpenLogin={openLogin} onOpenRegister={openRegister} />
 
-            <main>
+            <main className="bg-[#F6F9FC] text-[#1F2937]">
                 <Hero onOpenGetStarted={openGetStarted} onOpenDemo={openDemo} />
                 <ProblemSolution />
                 <Features />

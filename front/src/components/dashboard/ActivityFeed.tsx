@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RadioTower, ChevronRight, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { RadioTower, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import { getSocket } from '../../lib/socket';
 import type { AuditLog } from '../../types/dashboard';
 

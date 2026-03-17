@@ -31,6 +31,17 @@ export async function GET(req: Request) {
     const lat = latStr ? parseFloat(latStr) : 19.0760;
     const lng = lngStr ? parseFloat(lngStr) : 72.8777;
 
+    if (!supabase) {
+      return NextResponse.json({
+        id: 'fallback-hospital',
+        name: 'Central Command Hospital',
+        distance_km: '4.8',
+        icu_available: severity.toLowerCase().includes('critical') ? 3 : 7,
+        eta_mins: 14,
+        workload_badge: 'Fallback recommendation',
+      });
+    }
+
     const { data: hospitals } = await supabase.from('hospitals').select('*, resource_status(icu, doctors)');
 
     if (!hospitals || hospitals.length === 0) {

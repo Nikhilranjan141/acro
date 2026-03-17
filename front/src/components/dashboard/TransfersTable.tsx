@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowRightLeft, Users, Loader2 } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowRightLeft, Users, Search } from 'lucide-react';
 import type { Transfer } from '../../types/dashboard';
 
 interface TransfersTableProps {
@@ -8,12 +8,27 @@ interface TransfersTableProps {
 
 export const TransfersTable: React.FC<TransfersTableProps> = ({ initialData }) => {
   const [data, setData] = useState<Transfer[]>(initialData);
+  const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'ALL' | Transfer['status']>('ALL');
 
   useEffect(() => {
     setData(initialData);
   }, [initialData]);
 
-  // If we had a socket event for 'transfers:update' we could listen to it here similar to ActivityFeed
+  const filteredData = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return data.filter((transfer) => {
+      const queryMatch =
+        !normalizedQuery ||
+        transfer.patient_code.toLowerCase().includes(normalizedQuery) ||
+        transfer.from_hospital.toLowerCase().includes(normalizedQuery) ||
+        transfer.to_hospital.toLowerCase().includes(normalizedQuery);
+
+      const statusMatch = statusFilter === 'ALL' || transfer.status === statusFilter;
+      return queryMatch && statusMatch;
+    });
+  }, [data, query, statusFilter]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -32,14 +47,38 @@ export const TransfersTable: React.FC<TransfersTableProps> = ({ initialData }) =
 
   return (
     <div className="flex flex-col h-full rounded-xl bg-[var(--theme-medlink-card)] border border-[var(--theme-medlink-border)] shadow-sm overflow-hidden">
-      <div className="p-4 border-b border-[var(--theme-medlink-border)] bg-white/50 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[var(--theme-medlink-text-primary)] flex items-center gap-2">
-          <ArrowRightLeft className="w-5 h-5 text-[var(--theme-medlink-text-secondary)]" />
-          Active Patient Transfers
-        </h2>
-        <div className="flex items-center gap-2 text-sm text-[var(--theme-medlink-text-secondary)] font-medium bg-[var(--theme-medlink-bg)] px-3 py-1 rounded-md border border-[var(--theme-medlink-border)]">
-           <Users className="w-4 h-4" />
-           {data.length} Total
+      <div className="p-4 border-b border-[var(--theme-medlink-border)] bg-white/50">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-bold text-[var(--theme-medlink-text-primary)] flex items-center gap-2">
+            <ArrowRightLeft className="w-5 h-5 text-[var(--theme-medlink-text-secondary)]" />
+            Active Patient Transfers
+          </h2>
+          <div className="flex items-center gap-2 text-sm text-[var(--theme-medlink-text-secondary)] font-medium bg-[var(--theme-medlink-bg)] px-3 py-1 rounded-md border border-[var(--theme-medlink-border)]">
+            <Users className="w-4 h-4" />
+            {filteredData.length} Showing
+          </div>
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {['ALL', 'REQUESTED', 'ACCEPTED', 'IN_TRANSIT', 'COMPLETED'].map((status) => (
+            <button
+              key={status}
+              onClick={() => setStatusFilter(status as 'ALL' | Transfer['status'])}
+              className={`rounded-full px-2.5 py-1 text-[11px] font-semibold transition-colors ${statusFilter === status ? 'bg-[var(--theme-medlink-primary-blue)] text-white' : 'bg-[var(--theme-medlink-bg)] text-[var(--theme-medlink-text-secondary)] hover:bg-blue-50'}`}
+            >
+              {status === 'IN_TRANSIT' ? 'IN TRANSIT' : status}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-3 relative">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--theme-medlink-text-secondary)]" />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search patient, origin, or destination..."
+            className="w-full rounded-lg border border-[var(--theme-medlink-border)] bg-white py-2 pl-9 pr-3 text-sm text-[var(--theme-medlink-text-primary)] placeholder:text-[var(--theme-medlink-text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--theme-medlink-primary-blue)]/20"
+          />
         </div>
       </div>
       
@@ -54,11 +93,11 @@ export const TransfersTable: React.FC<TransfersTableProps> = ({ initialData }) =
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--theme-medlink-border)] text-sm">
-            {data.length === 0 ? (
+            {filteredData.length === 0 ? (
                <tr>
-                 <td colSpan={4} className="px-4 py-8 text-center text-[var(--theme-medlink-text-secondary)]">No active transfers</td>
+                 <td colSpan={4} className="px-4 py-8 text-center text-[var(--theme-medlink-text-secondary)]">No transfers found for current filters</td>
                </tr>
-            ) : data.map((transfer) => (
+            ) : filteredData.map((transfer) => (
               <tr key={transfer.id} className="hover:bg-slate-50 transition-colors group">
                 <td className="px-4 py-3 font-mono font-medium text-[var(--theme-medlink-text-primary)]">{transfer.patient_code}</td>
                 <td className="px-4 py-3">

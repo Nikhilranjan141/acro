@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Activity, Menu, X, UserPlus } from 'lucide-react';
+import { Menu, X, UserPlus } from 'lucide-react';
 import Container from './Container';
 import { cn } from '../../lib/cn';
+import MedLinkLogo from '../common/MedLinkLogo';
 
 const navLinks = [
     { label: 'Home', href: '#home' },
@@ -32,8 +33,8 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
             className={cn(
                 'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
                 scrolled
-                    ? 'bg-white/92 backdrop-blur-md border-b border-[rgba(31,41,55,0.10)] shadow-sm'
-                    : 'bg-white/70 backdrop-blur-sm border-b border-transparent'
+                    ? 'bg-white/95 backdrop-blur-xl border-b border-[#E5E7EB] shadow-sm'
+                    : 'bg-white/95 backdrop-blur-md border-b border-[#E5E7EB]'
             )}
             role="banner"
         >
@@ -48,12 +49,10 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                         className="flex items-center gap-2 group focus-visible:ring-2 focus-visible:ring-[#2563EB] rounded-lg px-1"
                         aria-label="MedLink home"
                     >
-                        <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#2563EB] shadow-sm group-hover:bg-[#1d4ed8] transition-colors">
-                            <Activity className="w-4 h-4 text-white" />
-                        </span>
-                        <span className="text-xl font-bold text-[#1F2937] tracking-tight">
-                            Med<span className="text-[#2563EB]">Link</span>
-                        </span>
+                        <MedLinkLogo
+                            iconClassName="w-8 h-8 rounded-lg group-hover:opacity-95 transition-opacity"
+                            textClassName="text-xl"
+                        />
                     </a>
 
                     {/* Desktop links */}
@@ -62,7 +61,7 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                             <li key={link.href}>
                                 <a
                                     href={link.href}
-                                    className="px-3 py-2 text-sm font-medium text-[#6B7280] rounded-lg hover:text-[#1F2937] hover:bg-gray-100 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
+                                    className="px-3 py-2 text-sm font-medium text-[#1F2937] rounded-lg hover:text-[#2563EB] hover:bg-[#F9FAFB] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
                                 >
                                     {link.label}
                                 </a>
@@ -76,7 +75,7 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                         <button
                             id="navbar-register-btn"
                             onClick={onOpenRegister}
-                            className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg text-[#6B7280] hover:text-[#2563EB] hover:bg-blue-50 border border-transparent hover:border-[#2563EB]/20 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
+                            className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg text-[#1F2937] hover:text-[#2563EB] hover:bg-[#F9FAFB] border border-[#E5E7EB] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
                             aria-label="Create an account"
                             title="Create an account"
                         >
@@ -87,14 +86,14 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                         <button
                             id="navbar-login-btn"
                             onClick={onOpenLogin}
-                            className="hidden md:inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-[#1d4ed8] transition-colors duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
+                            className="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold text-[#1F2937] bg-white border border-[#E5E7EB] rounded-lg hover:bg-[#F9FAFB] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
                         >
                             Login
                         </button>
 
                         {/* Mobile toggle */}
                         <button
-                            className="md:hidden p-2 rounded-lg text-[#6B7280] hover:bg-gray-100 hover:text-[#1F2937] transition-colors focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
+                            className="md:hidden p-2 rounded-lg text-[#6B7280] hover:bg-[#F9FAFB] hover:text-[#1F2937] transition-colors focus-visible:ring-2 focus-visible:ring-[#2563EB] focus-visible:outline-none"
                             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                             aria-expanded={mobileOpen}
                             onClick={() => setMobileOpen(!mobileOpen)}
@@ -118,7 +117,7 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                                 <a
                                     href={link.href}
                                     onClick={handleNavClick}
-                                    className="block px-3 py-2 text-sm font-medium text-[#6B7280] rounded-lg hover:text-[#1F2937] hover:bg-gray-100 transition-all"
+                                    className="block px-3 py-2 text-sm font-medium text-[#1F2937] rounded-lg hover:text-[#2563EB] hover:bg-[#F9FAFB] transition-all"
                                 >
                                     {link.label}
                                 </a>
@@ -127,7 +126,7 @@ export default function Navbar({ onOpenLogin, onOpenRegister }: NavbarProps) {
                         <li>
                             <button
                                 onClick={() => { handleNavClick(); onOpenLogin(); }}
-                                className="w-full text-left px-3 py-2 text-sm font-semibold text-[#2563EB] rounded-lg hover:bg-blue-50 transition-all"
+                                className="w-full text-left px-3 py-2 text-sm font-semibold text-[#2563EB] rounded-lg hover:bg-[#F9FAFB] transition-all"
                             >
                                 Login
                             </button>

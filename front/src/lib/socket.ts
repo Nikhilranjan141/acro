@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import { runtimeConfig } from './runtimeConfig';
 
 let socket: Socket | null = null;
 let initialized = false;
@@ -6,9 +7,7 @@ let initialized = false;
 export const initSocket = async () => {
   if (initialized) return socket;
 
-  // Next.js development server runs on 3001 typically if we start it alongside Vite
-  // We'll hardcode the API URL config for this challenge.
-  const API_URL = 'http://localhost:3001';
+  const API_URL = runtimeConfig.apiBaseUrl;
 
   try {
     // 1. Wake up the socket server
